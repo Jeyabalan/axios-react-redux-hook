@@ -1,6 +1,7 @@
 import { initialState } from "../state";
 import { ADD_TODO, ADD_TODO_FAILURE, ADD_TODO_SUCCESS } from '../actions/AddTodoAction';
 import { GET_TODO_FAILURE, GET_TODO_SUCCESS } from "../actions/GetTodosAction";
+import { COMPLETE_TOO_FAILURE } from '../actions/CompleteTodoAction';
 
 export const toDoReducer = (state = initialState.todosState, action) => {
     switch (action.type) {
