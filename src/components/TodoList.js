@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { doneTodo } from '../store/actions/done.action';
+import { getAllTodos } from '../store/actions/GetTodosAction';
+import { completeTodo } from '../store/actions/CompleteTodoAction';
 
 function TodoList() {
     const todos = useSelector(state => state.todosState.todos);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getAllTodos());
+    }, [dispatch]);
+
+    const makeCompleteTodo = (todo, id) => {
+        dispatch(completeTodo({
+            ...todo,
+            completed: true,
+        },
+        todo.id));
+    }
 
     return (
         <div className="mt-3 container-fluid w-100">
@@ -32,7 +45,7 @@ function TodoList() {
                                 <td style={textDecoration}>{index + 1}</td>
                                 <td style={textDecoration}>{todo.text}</td>
                                 <td>
-                                    <button style={completedTodo} className="btn btn-class btn-primary" onClick={() => todo.completed === false && dispatch(doneTodo(todo.id))}>Done</button>
+                                    <button style={completedTodo} className="btn btn-class btn-primary" onClick={() => todo.completed === false && makeCompleteTodo(todo, todo.id)}>Done</button>
                                 </td>
                             </tr>
                         })

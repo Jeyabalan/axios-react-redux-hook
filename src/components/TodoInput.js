@@ -1,14 +1,19 @@
 import React from 'react'
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addToDo } from '../store/actions/add.action';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToDo } from '../store/actions/AddTodoAction';
 
 function TodoInput() {
     const dispatch = useDispatch();
     const [value, setValue] = useState('');
+    const todos = useSelector(state => state.todosState.todos);
 
     function addToDoList() {
-        dispatch(addToDo(value));
+        dispatch(addToDo({
+            id: todos.length + 1,
+            text: value,
+            completed: false,
+        }));
         setValue('');
     }
 

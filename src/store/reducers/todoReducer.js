@@ -1,5 +1,6 @@
 import { initialState } from "../state";
-import { ADD_TODO, ADD_TODO_FAILURE, ADD_TODO_SUCCESS } from '../actions/add.action';
+import { ADD_TODO, ADD_TODO_FAILURE, ADD_TODO_SUCCESS } from '../actions/AddTodoAction';
+import { GET_TODO_FAILURE, GET_TODO_SUCCESS } from "../actions/GetTodosAction";
 
 export const toDoReducer = (state = initialState.todosState, action) => {
     switch (action.type) {
@@ -17,9 +18,22 @@ export const toDoReducer = (state = initialState.todosState, action) => {
             };
         case ADD_TODO_FAILURE:
             return {
-                todos: [],
+                todos: [...state.todos],
+                loading: false,
+                error: action.error,
+            };
+        case GET_TODO_SUCCESS:
+            return {
+                todos: action.payload,
                 loading: false,
                 error: '',
+            };
+        case GET_TODO_FAILURE:
+        case COMPLETE_TOO_FAILURE:
+            return {
+                todos: [...state.todos],
+                loading: false,
+                error: action.error,
             };
         default:
             return state;
